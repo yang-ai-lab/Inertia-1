@@ -1,0 +1,8 @@
+# Size preset: "medium".
+preset:
+  patchtst:
+    d_model: 768
+    n_layers: 6
+    n_heads: 8
+    d_ff: 2048
+    res_attention: false

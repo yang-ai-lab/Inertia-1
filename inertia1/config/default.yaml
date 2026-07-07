@@ -1,0 +1,154 @@
+# Run-stage control
+run:
+  # one of: pretrain | finetune | both
+  stage: pretrain
+
+  # when stage includes finetune:
+  # - if stage=finetune: REQUIRED (path to ckpt from a previous pretraining run)
+  # - if stage=both: optional; if null we automatically use the checkpoint produced by pretrain
+  ckpt_path: null
+
+  # which checkpoint to use if stage=both and ckpt_path is null
+  # one of: best | last
+  ckpt_pick: best
+
+  # If true, we do a lightweight compatibility check and print a warning if mismatch detected.
+  strict_ckpt_cfg_match: false
+  
+  finetune:
+  # one of: linear_probe | full_finetune
+  mode: linear_probe
+  # If null, defaults to eval_motion.linear_probe.{epochs,lr,weight_decay}
+  epochs: null
+  lr: null
+  weight_decay: null
+  max_grad_norm: 1.0
+
+optim:
+  lr: 1.0e-3
+  weight_decay: 0.04
+data:
+  # Pretraining corpus root(s), comma-separated. Expected on-disk layout:
+  #   <data_root>/<subject_id>/**/*.parquet   with columns [X, Y, Z]
+  # We pretrained on NHANES accelerometry, which we cannot redistribute.
+  # See README ("Pretraining data") for where to download NHANES and how to
+  # preprocess it. Point this at your own corpus (e.g. ./data/pretrain).
+  data_root: ./data/pretrain
+  # Optional: subject-level split CSV (prevents OOM on huge corpora by avoiding window-level random_split).
+  # Format: columns [patient_id, split] with split in {train,val}.
+  split_csv: null
+  # When split_csv is set, train/val are taken from the CSV and patient-level samplers are used.
+  patient_shuffle: true
+  patient_shuffle_seed: 0
+  file_extension: .parquet
+  input_format: CT
+  parquet_columns: null
+  batch_size: 1024
+  val_split: 0.1
+  # Fraction of validation set to use for checkpointing (1.0 = all, 0.01 = 1%)
+  val_subsample_ratio: .2
+  # Fraction of training windows to keep (1.0 = use all). Useful for quick sweeps like 0.01 or 0.1.
+  train_subsample_ratio: 1.0
+  num_workers: 1
+  pin_memory: true
+  seed: 42
+  max_samples: null
+  window_sec: 30
+  stride_sec: null
+  hz: 20
+  native_hz: 20
+  axes: 3
+  axis_reduce: l2
+  # If >1, treat N consecutive fixed-duration files as one long sequence.
+  # Example: concat_files=12 with file_duration_sec=600 -> 120 minutes per sequence.
+  concat_files: 1
+  file_duration_sec: 600
+  assume_fixed_duration: true
+  tolerate_bad_files: true
+  bad_file_max_retries: 20
+  cache_last_file: true
+fairness:
+  max_total_params: null
+  max_trainable_params: null
+trainer:
+  accelerator: auto
+  devices: auto
+  strategy: auto
+  precision: 32-true
+  max_epochs: 5
+  gradient_clip_val: 1.0
+  # Set false when using custom samplers (e.g., data.split_csv) to prevent Lightning
+  # from wrapping with DistributedSampler (which can OOM on huge datasets).
+  use_distributed_sampler: false
+  log_every_n_steps: 50
+  enable_progress_bar: true
+  enable_model_summary: true
+checkpointing:
+  enabled: true
+  # Where experiment outputs live (logs + ckpts)
+  root_dir: outputs
+  # If null, will be auto-generated from cfg (method/preset/data axes/etc)
+  run_name: null
+  # If null, will default to <root_dir>/<run_name>
+  run_dir: null
+  # Lightning ModelCheckpoint config
+  monitor: val/loss           # for SSL methods that log val/loss
+  mode: min
+  save_top_k: 1               # "best" checkpoint 
+  save_last: true             # always keep last.ckpt
+  every_n_epochs: null
+  every_n_train_steps: 5000
+  train_time_interval: null
+  filename: "epoch={epoch:04d}-step={step}"
+  # Optional additional retention controls
+  save_on_train_epoch_end: false
+logging:
+  wandb:
+    enabled: false
+    project: inertia1
+    name: null
+    entity: null
+    save_dir: null
+    tags: null
+
+# Optional downstream evaluation on HAR / FoG datasets via motion_dataloader.py.
+# Runs a per-dataset linear probe (or full finetune) on frozen SSL embeddings.
+# The datasets themselves are not redistributable; preprocess your own copies
+# with scripts/preprocessing/ (see README) into <data_root>/<dataset>/processed/.
+# Frozen splits are NOT shipped (they are derived from non-redistributable data);
+# generate your own with inertia1/eval/motion_split_analysis.py and point
+# `eval_motion.split_path_or_dir` at the resulting directory.
+eval_motion:
+  dataloader_py: motion_dataloader.py
+  data_root: ./data/downstream
+  sampling_rate: null     # defaults to data.hz
+  window_sec: 30          # defaults to data.window_sec
+  extra_eval_window_secs: []  # additional window sizes to evaluate (need matching split dirs)
+  extra_eval_agg: mean_prob
+  extra_eval_save_prefix: linear_probe_results
+  split_path_or_dir: null     # path to a generated split dir/file (see README)
+  split_dirs_by_window_sec: null
+  experts:
+    sensor_experts: true
+    placement_experts: true
+  allow_oob_splits: true
+  mode: nonoverlap
+  preload: true
+  return_majority_label: true
+  sensor_types: accelerometer
+  placement: null
+  label_column: null
+  top_k_labels: null
+  max_files_per_dataset: null
+  max_windows: null
+  subsample_ratio: null
+  linear_probe:
+    epochs: 1000
+    lr: 1.0e-3
+    weight_decay: 0.0
+    seed: 0
+    train_frac: 0.7
+    val_frac: 0.15
+    batch_size: 256
+    num_workers: 4
+    pin_memory: true

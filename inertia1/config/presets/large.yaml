@@ -1,0 +1,8 @@
+# Size preset: "large".
+preset:
+  patchtst:
+    d_model: 1024
+    n_layers: 8
+    n_heads: 16
+    d_ff: 4096
+    res_attention: false

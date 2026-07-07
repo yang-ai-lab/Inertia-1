@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# Outputs / logs / checkpoints
+outputs/
+logs/
+lightning_logs/
+wandb/
+*.ckpt
+
+# Local data (datasets are not redistributable; see README)
+data/
+
+# OS / editor
+.DS_Store
+.ipynb_checkpoints/
+.vscode/
+.idea/
+
+# Packaged site archive (not part of the repo)
+*.zip

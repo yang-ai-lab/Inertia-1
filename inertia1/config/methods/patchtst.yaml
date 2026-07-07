@@ -1,0 +1,37 @@
+method:
+  name: patchtst
+  params:
+    patch_len: 10
+    stride: 10
+    mask_ratio: 0.4
+
+optim:
+  lr: 1.0e-3
+  weight_decay: 1.0e-4
+  beta1: 0.9
+  beta2: 0.95
+  scheduler:
+    enabled: true
+    warmup_steps: 500
+    min_lr_ratio: 0.01
+
+model:
+  params:
+    # PatchTST_Accel ctor
+    n_layers: 3
+    d_model: 128
+    n_heads: 8
+    d_ff: 256
+    norm: LayerNorm
+    attn_dropout: 0.0
+    dropout: 0.0
+    act: gelu
+    res_attention: true
+    pre_norm: true
+    store_attn: false
+    pe: zeros
+    learn_pe: true
+    head_dropout: 0.0
+    head_type: pretrain
+    target_dim: null
+    verbose: false

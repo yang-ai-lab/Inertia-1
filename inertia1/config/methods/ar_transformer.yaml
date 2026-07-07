@@ -1,0 +1,15 @@
+method:
+  name: ar_transformer
+  params:
+    patch_len: 10
+    d_model: 512
+    n_layers: 4
+    n_heads: 4
+    d_ff: 1024
+    dropout: 0.0
+
+optim:
+  scheduler:
+    enabled: true
+    warmup_steps: 500
+    min_lr_ratio: 0.01
