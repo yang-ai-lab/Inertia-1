@@ -1,0 +1,9 @@
+# webpage branch is docs-only; ignore leftover source/build artifacts
+# that live in the working tree (they belong to the `main` branch).
+__pycache__/
+*.pyc
+outputs/
+ts_ssl/
+
+# packaged site archive for third-party hosting (not part of the repo)
+*.zip

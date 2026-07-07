@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inertia-1 &mdash; A Universal Motion Model</title>
+  <meta name="description" content="Inertia-1 unifies a fragmented field into one general wearable-motion model &mdash; a representation learned from wrist-only accelerometry that transfers across the body, gets stronger with multi-stream sensing, and powers everything from activity to health.">
+
+  <meta property="og:title" content="Inertia-1 — A Universal Motion Model">
+  <meta property="og:description" content="One general motion model, learned from a single wrist sensor, that transfers across placements, devices, and tasks.">
+  <meta property="og:type" content="website">
+
+  <link rel="icon" href="./static/images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Spectral:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Sora:wght@500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="./static/css/landing.css?v=78">
+</head>
+<body id="top">
+
+<!-- ============ Navbar ============ -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <span class="mark"></span>
+      <span class="brand-name">Inertia-1</span>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#idea">The idea</a></li>
+        <li><a href="#findings">Findings</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a class="btn-mini" href="./paper/">Read the paper</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ Hero ============ -->
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <span class="orb orb-o"></span>
+    <span class="orb orb-g"></span>
+    <span class="orb orb-b"></span>
+    <div class="grid-fade"></div>
+  </div>
+
+  <div class="wrap hero-inner">
+   <div class="hero-scalewrap">
+    <div class="hero-stage">
+    <div class="constellation reveal" aria-label="What makes Inertia-1 universal">
+      <canvas class="starfield" aria-hidden="true"></canvas>
+      <svg class="constel-lines" aria-hidden="true"></svg>
+      <button class="star" style="left:16%;top:30%" type="button" aria-label="Placement transfer">
+        <span class="dot"></span><span class="tag">Placement transfer</span>
+        <span class="card"><b>From one wrist to the whole body</b><span>Pretrained on the wrist alone, it transfers to placements it never saw &mdash; hip, ankle, chest, and more.</span></span>
+      </button>
+      <button class="star" style="left:40%;top:16%" type="button" aria-label="Multi-stream">
+        <span class="dot"></span><span class="tag">Multi-stream</span>
+        <span class="card"><b>One sensor becomes many</b><span>Fuse extra sensors and placements and accuracy climbs &mdash; the streams are complementary, not redundant.</span></span>
+      </button>
+      <button class="star" style="left:66%;top:26%" type="button" aria-label="Rate-robust">
+        <span class="dot"></span><span class="tag">Rate-robust</span>
+        <span class="card"><b>Steady from 1 Hz to 20 Hz</b><span>Pretrained representations stay strong even at low sampling rates, with finer rates helping subtle health signals.</span></span>
+      </button>
+      <button class="star" style="left:84%;top:48%" type="button" aria-label="Task-universal">
+        <span class="dot"></span><span class="tag">Task-universal</span>
+        <span class="card"><b>One model, every task</b><span>The same backbone powers activity recognition, gait analysis, and long-horizon disease prediction.</span></span>
+      </button>
+      <button class="star" style="left:58%;top:72%" type="button" aria-label="Health insight">
+        <span class="dot"></span><span class="tag">Health insight</span>
+        <span class="card"><b>Movement, read as health</b><span>Passive motion carries long-horizon health markers, linking everyday movement to clinical outcomes.</span></span>
+      </button>
+      <button class="star" style="left:26%;top:66%" type="button" aria-label="Device-agnostic">
+        <span class="dot"></span><span class="tag">Device-agnostic</span>
+        <span class="card"><b>Works across devices &amp; sensors</b><span>Robust to new devices and sensor modalities, so it plugs into whatever a wearable already has.</span></span>
+      </button>
+    </div>
+
+    <div class="hero-head">
+      <div class="hero-title">
+        <h1><span class="grad-text">Inertia-1</span></h1>
+        <p class="type-line">
+          <span class="th-ghost" aria-hidden="true">An Open Exploration to a Unified Motion Foundation Model</span>
+          <span class="th-live"><span id="typed" class="typed"></span><span class="caret" aria-hidden="true"></span></span>
+        </p>
+      </div>
+      <div class="hero-type">
+        <div class="lead-list" id="lead-lines"></div>
+      </div>
+    </div>
+    <div class="cta-row hero-cta">
+      <a class="btn ghost" href="https://docs.google.com/forms/d/e/1FAIpQLSe3T0h3gcEiqHGGap-IEIdgT7h6_zuvZpxQ5BAz9c8yqIs_BA/viewform?usp=dialog" target="_blank" rel="noopener" aria-label="Contact us"><i class="fas fa-envelope"></i> Contact Us</a>
+    </div>
+    </div>
+   </div>
+  </div>
+</section>
+
+<!-- ============ The idea ============ -->
+<section class="section alt" id="idea">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">The big idea</span>
+      <h2>Towards one general motion model</h2>
+      <p>Motion is universal &mdash; but the models built for it weren't. Inertia-1 brings the whole landscape under one roof.</p>
+    </div>
+
+    <div class="accordion reveal">
+      <details class="acc-item o-1">
+        <summary><span class="acc-num">01</span><span class="acc-title">A fragmented field</span><i class="fas fa-plus acc-ico"></i></summary>
+        <div class="acc-body"><p>Datasets disagree on the basics &mdash; sampling rate, window length, sensor modality, body placement, even signal format &mdash; and every task gets its own bespoke model. Findings rarely carry from one setup to the next.</p></div>
+      </details>
+      <details class="acc-item o-2">
+        <summary><span class="acc-num">02</span><span class="acc-title">One unified exploration</span><i class="fas fa-plus acc-ico"></i></summary>
+        <div class="acc-body"><p>Inertia-1 studies the full lifecycle of motion models &mdash; data, sensing, objectives, and scale &mdash; inside a single, controlled space instead of isolated one-offs.</p></div>
+      </details>
+      <details class="acc-item o-3">
+        <summary><span class="acc-num">03</span><span class="acc-title">A general representation</span><i class="fas fa-plus acc-ico"></i></summary>
+        <div class="acc-body"><p>The payoff: one representation that adapts across placements, devices, and tasks &mdash; the same backbone, working far beyond the setting it was trained on.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Axes of exploration marquee ============ -->
+<section class="logos">
+  <div class="wrap">
+    <div class="marquee">
+      <div class="marquee-track">
+        <span class="logo-chip">Head</span>
+        <span class="logo-chip">Chest</span>
+        <span class="logo-chip">Back</span>
+        <span class="logo-chip">Arm</span>
+        <span class="logo-chip">Wrist</span>
+        <span class="logo-chip">Hand</span>
+        <span class="logo-chip">Hip</span>
+        <span class="logo-chip">Thigh</span>
+        <span class="logo-chip">Knee</span>
+        <span class="logo-chip">Shin</span>
+        <span class="logo-chip">Ankle</span>
+        <span class="logo-chip">Accelerometer</span>
+        <span class="logo-chip">Gyroscope</span>
+        <span class="logo-chip">Magnetometer</span>
+        <span class="logo-chip">Triaxial</span>
+        <span class="logo-chip">ENMO</span>
+        <span class="logo-chip">0.2&nbsp;Hz</span>
+        <span class="logo-chip">1&nbsp;Hz</span>
+        <span class="logo-chip">5&nbsp;Hz</span>
+        <span class="logo-chip">20&nbsp;Hz</span>
+        <span class="logo-chip">10&nbsp;s window</span>
+        <span class="logo-chip">30&nbsp;s window</span>
+        <span class="logo-chip">60&nbsp;s window</span>
+        <span class="logo-chip">2&nbsp;hr window</span>
+        <span class="logo-chip">Frequency domain</span>
+        <span class="logo-chip">Time domain</span>
+        <span class="logo-chip">Activity recognition</span>
+        <span class="logo-chip">Gait detection</span>
+        <span class="logo-chip">Longitudinal health</span>
+        <span class="logo-chip">Head</span>
+        <span class="logo-chip">Chest</span>
+        <span class="logo-chip">Back</span>
+        <span class="logo-chip">Arm</span>
+        <span class="logo-chip">Wrist</span>
+        <span class="logo-chip">Hand</span>
+        <span class="logo-chip">Hip</span>
+        <span class="logo-chip">Thigh</span>
+        <span class="logo-chip">Knee</span>
+        <span class="logo-chip">Shin</span>
+        <span class="logo-chip">Ankle</span>
+        <span class="logo-chip">Accelerometer</span>
+        <span class="logo-chip">Gyroscope</span>
+        <span class="logo-chip">Magnetometer</span>
+        <span class="logo-chip">Triaxial</span>
+        <span class="logo-chip">ENMO</span>
+        <span class="logo-chip">0.2&nbsp;Hz</span>
+        <span class="logo-chip">1&nbsp;Hz</span>
+        <span class="logo-chip">5&nbsp;Hz</span>
+        <span class="logo-chip">20&nbsp;Hz</span>
+        <span class="logo-chip">10&nbsp;s window</span>
+        <span class="logo-chip">30&nbsp;s window</span>
+        <span class="logo-chip">60&nbsp;s window</span>
+        <span class="logo-chip">2&nbsp;hr window</span>
+        <span class="logo-chip">Frequency domain</span>
+        <span class="logo-chip">Time domain</span>
+        <span class="logo-chip">Activity recognition</span>
+        <span class="logo-chip">Gait detection</span>
+        <span class="logo-chip">Longitudinal health</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Findings: signature (wrist -> body) ============ -->
+<section class="section" id="findings">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">What we found</span>
+      <p>Beyond benchmarks, Inertia-1 surfaces the choices that decide whether a motion model actually works in the real world.</p>
+    </div>
+
+    <div class="finding-views">
+      <div class="view view-main">
+        <div class="split">
+          <div class="split-text reveal">
+            <h2>Learn it on the wrist. Use it anywhere on the body.</h2>
+            <button class="discover-btn" type="button"><span class="d-label">Discover more</span><i class="fas fa-arrow-right d-ico"></i></button>
+          </div>
+          <div class="split-visual reveal">
+            <img class="finding-fig fig-wrist" src="./static/images/wrist-transfer.svg" alt="A wrist sensor pretrained on accelerometry transfers across the body &mdash; head, chest, hip, thigh, knee, shin, and ankle &mdash; each showing its own motion signal.">
+          </div>
+        </div>
+      </div>
+      <div class="view view-detail">
+        <div class="split detail-tnarrow">
+          <div class="split-text">
+            <button class="back-btn" type="button"><i class="fas fa-arrow-left"></i> Go back</button>
+            <p class="discover-sum">Pretrain once on the wrist, then point the model anywhere. It holds up on body placements &mdash; and even sensor types like gyroscope and magnetometer &mdash; that it never saw during training. No retraining for each new spot on the body.</p>
+          </div>
+          <div class="split-visual">
+            <figure class="discover-fig">
+              <img src="./static/images/multistream-transp.svg" alt="Wrist-accelerometer pretraining transfers across sensors and placements.">
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Findings: multi-stream ============ -->
+<section class="section alt" id="multistream">
+  <div class="wrap">
+    <div class="finding-views">
+      <div class="view view-main">
+        <div class="split">
+          <div class="split-visual reveal">
+            <div class="fusion">
+              <div class="streams">
+                <span class="stream o"><i class="fas fa-wave-square"></i> Wrist accelerometer</span>
+                <span class="stream g"><i class="fas fa-compass"></i> Other sensors &middot; gyro, mag</span>
+                <span class="stream b"><i class="fas fa-location-dot"></i> Other placements</span>
+              </div>
+              <div class="fuse-arrow"><i class="fas fa-arrow-down-long"></i></div>
+              <div class="fused">
+                <i class="fas fa-diagram-project"></i>
+                <b>Fused representation</b>
+                <em>higher accuracy &middot; cleaner motion clusters</em>
+              </div>
+            </div>
+          </div>
+          <div class="split-text reveal">
+            <h2>Add more streams. Get more signal.</h2>
+            <button class="discover-btn" type="button"><span class="d-label">Discover more</span><i class="fas fa-arrow-right d-ico"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="view view-detail">
+        <div class="split detail-wide">
+          <div class="split-visual">
+            <figure class="discover-fig">
+              <img src="./static/images/embedding-transp.svg" alt="Multi-stream fusion improves representation geometry.">
+            </figure>
+          </div>
+          <div class="split-text">
+            <button class="back-btn" type="button"><i class="fas fa-arrow-left"></i> Go back</button>
+            <p class="discover-sum">Stack on more streams &mdash; extra placements, gyroscope, magnetometer &mdash; and the learned representation gets both more accurate and cleaner, with activities separating into tighter clusters. The streams are complementary: each one catches something the others miss.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Findings: sensing design ============ -->
+<section class="section" id="sensing">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Also worth knowing</span>
+      <h2>Sensing design is a first-order choice</h2>
+      <p>How you capture motion shapes what a model can do with it. A few practical rules of thumb from the study.</p>
+    </div>
+
+    <ul class="blist reveal">
+      <li class="bl-item a-blue">
+        <button class="bl-head" type="button"><span class="bl-dot"></span><span class="bl-title">Sampling rate</span><i class="fas fa-chevron-down bl-ico"></i></button>
+        <div class="bl-body"><div><p>Pretrained models stay strong even at a low 1&nbsp;Hz for activity recognition; finer-grained health signals benefit from higher sampling rates.</p></div></div>
+      </li>
+      <li class="bl-item a-green">
+        <button class="bl-head" type="button"><span class="bl-dot"></span><span class="bl-title">Window length</span><i class="fas fa-chevron-down bl-ico"></i></button>
+        <div class="bl-body"><div><p>30&ndash;60&nbsp;second windows hit the sweet spot across most tasks &mdash; long enough to capture context, short enough to stay sharp.</p></div></div>
+      </li>
+      <li class="bl-item a-orange">
+        <button class="bl-head" type="button"><span class="bl-dot"></span><span class="bl-title">Keep all three axes</span><i class="fas fa-chevron-down bl-ico"></i></button>
+        <div class="bl-body"><div><p>Full triaxial input consistently beats collapsed vector-magnitude summaries &mdash; the extra axes carry signal worth keeping.</p></div></div>
+      </li>
+      <li class="bl-item a-blue">
+        <button class="bl-head" type="button"><span class="bl-dot"></span><span class="bl-title">Stay in the time domain</span><i class="fas fa-chevron-down bl-ico"></i></button>
+        <div class="bl-body"><div><p>Time-domain modeling preserves gait and health cues better than frequency-domain reconstruction.</p></div></div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ How it works ============ -->
+<section class="section alt" id="how">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">How it works</span>
+      <h2>One pipeline, from raw signal to real-world insight</h2>
+      <p>The general representation comes together in three clean steps.</p>
+    </div>
+
+    <div class="timeline reveal">
+      <div class="tl-step a-blue">
+        <div class="tl-node">01</div>
+        <div class="tl-title">Pretrain at scale</div>
+        <div class="tl-desc"><span><p>Learn from planetary-scale accelerometry &mdash; over 18 million hours across global cohorts &mdash; with self-supervision, no labels required.</p></span></div>
+      </div>
+      <div class="tl-step a-green">
+        <div class="tl-node">02</div>
+        <div class="tl-title">Transfer across settings</div>
+        <div class="tl-desc"><span><p>Adapt the same representation to new placements, devices, and sampling rates with light tuning &mdash; or none at all.</p></span></div>
+      </div>
+      <div class="tl-step a-orange">
+        <div class="tl-node">03</div>
+        <div class="tl-title">Deploy across tasks</div>
+        <div class="tl-desc"><span><p>Power activity, mobility, and health applications from one backbone &mdash; from fitness tracking to clinical screening.</p></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Capabilities ============ -->
+<section class="section" id="capabilities">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Capabilities</span>
+      <h2>From movement to meaning</h2>
+      <p>The same representation spans the full spectrum of motion understanding.</p>
+    </div>
+
+    <div class="mgrid cols-3 reveal">
+      <button class="mcard a-blue" type="button">
+        <span class="mc-icon"><i class="fas fa-person-running"></i></span>
+        <span class="mc-title">Activity &amp; behavior</span>
+        <i class="fas fa-plus mc-plus"></i>
+        <span class="mc-desc"><span>Recognize everyday activities and behavioral patterns with state-of-the-art accuracy across diverse populations.</span></span>
+      </button>
+      <button class="mcard a-green" type="button">
+        <span class="mc-icon"><i class="fas fa-shoe-prints"></i></span>
+        <span class="mc-title">Gait &amp; mobility</span>
+        <i class="fas fa-plus mc-plus"></i>
+        <span class="mc-desc"><span>Detect subtle gait changes &mdash; like freezing of gait &mdash; that signal mobility decline and neurological conditions.</span></span>
+      </button>
+      <button class="mcard a-orange" type="button">
+        <span class="mc-icon"><i class="fas fa-notes-medical"></i></span>
+        <span class="mc-title">Health &amp; disease</span>
+        <i class="fas fa-plus mc-plus"></i>
+        <span class="mc-desc"><span>Surface long-horizon health markers from passive motion, linking everyday movement to clinical outcomes.</span></span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta-band">
+  <div class="wrap reveal">
+    <h2>One general model for human motion</h2>
+    <p>Inertia-1 is a first step toward a unified motion foundation model &mdash; and an open invitation to collaborators with motion data, new tasks, or a shared interest in where the field is headed.</p>
+    <div class="cta-row center">
+      <a class="btn primary" href="./paper/"><i class="fas fa-book-open"></i> Read the paper</a>
+      <a class="btn ghost" href="https://docs.google.com/forms/d/e/1FAIpQLSe3T0h3gcEiqHGGap-IEIdgT7h6_zuvZpxQ5BAz9c8yqIs_BA/viewform?usp=dialog" target="_blank" rel="noopener" aria-label="Contact us"><i class="fas fa-envelope"></i> Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Footer ============ -->
+<footer class="footer">
+  <div class="wrap foot-inner">
+    <div class="foot-brand">
+      <span class="mark"></span>
+      <span>Inertia-1</span>
+    </div>
+    <nav class="foot-links">
+      <a href="#idea">The idea</a>
+      <a href="#findings">Findings</a>
+      <a href="#capabilities">Capabilities</a>
+      <a href="./paper/">Paper</a>
+    </nav>
+    <p class="foot-copy">&copy; 2026 Inertia-1. An open exploration of wearable motion foundation models.</p>
+  </div>
+</footer>
+
+<script src="./static/js/landing.js?v=49"></script>
+</body>
+</html>

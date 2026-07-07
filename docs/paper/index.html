@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inertia-1: An Open Exploration of Wearable Motion Foundation Models</title>
+  <meta name="description" content="Inertia-1 is a fully open exploration of wearable motion foundation models, spanning 18.2M+ hours of accelerometry, 15 datasets, and downstream evaluation across activity recognition, gait analysis, and disease prediction.">
+  <meta name="keywords" content="Inertia-1, wearable motion, foundation models, accelerometer, self-supervised learning, human activity recognition, freezing of gait, disease prediction, NHANES, UK Biobank">
+
+  <meta property="og:title" content="Inertia-1: An Open Exploration of Wearable Motion Foundation Models">
+  <meta property="og:description" content="A unified, open cookbook for wearable motion representation learning.">
+  <meta property="og:type" content="website">
+
+  <link rel="icon" href="./static/images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="./static/css/styles.css?v=2">
+</head>
+<body id="top">
+
+<!-- ============ Navbar ============ -->
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <span class="mark"></span>
+      <span>Inertia-1</span>
+      <span class="v">Motion FM</span>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="../" data-section="home">Home</a></li>
+        <li><a href="#overview" data-section="overview">Overview</a></li>
+        <li><a href="#framework" data-section="framework">Framework</a></li>
+        <li><a href="#findings" data-section="findings">Findings</a></li>
+        <li><a href="#paper" data-section="paper">Paper</a></li>
+        <li><a class="ghub" href="https://github.com/yang-ai-lab/Inertia-1" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i> Code</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ Hero ============ -->
+<section class="hero">
+  <svg class="hero-lines" viewBox="0 0 1440 400" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M-20 320 q120 -120 240 -10 t240 -10 t240 -10 t240 -10 t240 -10 t240 -10" fill="none" stroke="#f97316" stroke-width="2" opacity="0.35"/>
+    <path d="M-20 350 q120 -120 240 -10 t240 -10 t240 -10 t240 -10 t240 -10 t240 -10" fill="none" stroke="#22c55e" stroke-width="2" opacity="0.3"/>
+    <path d="M-20 380 q120 -120 240 -10 t240 -10 t240 -10 t240 -10 t240 -10 t240 -10" fill="none" stroke="#0ea5e9" stroke-width="2" opacity="0.3"/>
+  </svg>
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span> Wearable Motion Foundation Models</span>
+    <h1><span class="grad-text">Inertia-1</span>: An Open Exploration of Wearable Motion Foundation Models</h1>
+    <p class="tagline">A controlled, fully open study of the full lifecycle of wearable motion foundation models &mdash; data, sensing, objectives, and scale &mdash; built into a practical cookbook for motion representation learning.</p>
+
+    <div class="authors">
+      <span>Zongzhe Xu</span><sup>1</sup>,
+      <span>Aakarsh Anand</span><sup>1</sup>,
+      <span>Sarah Jiang</span><sup>2</sup>,
+      <span>Chuntung Zhuang</span><sup>3</sup>,
+      <span>Zitao Shuai</span><sup>1</sup>,
+      <span>Sriram Sankararaman</span><sup>1</sup>,
+      <span>Yuzhe Yang</span><sup>1&dagger;</sup>
+    </div>
+    <div class="affil">
+      <sup>1</sup>University of California, Los Angeles &nbsp;&middot;&nbsp;
+      <sup>2</sup>Duke University &nbsp;&middot;&nbsp;
+      <sup>3</sup>Johns Hopkins University
+      &nbsp;&nbsp;<span class="corr">&dagger; Correspondence: yuzhey@ucla.edu</span>
+    </div>
+
+    <div class="btns">
+      <a class="btn primary disabled" href="#"><i class="ai ai-arxiv"></i> arXiv <span class="tag">soon</span></a>
+      <a class="btn outline disabled" href="#"><i class="fas fa-file-pdf"></i> PDF <span class="tag">soon</span></a>
+      <a class="btn" href="https://github.com/yang-ai-lab/Inertia-1" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Stat band ============ -->
+<section class="stats">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="stat"><div class="num o">18.2M+</div><div class="lab">Hours of motion</div></div>
+      <div class="stat"><div class="num g">115K+</div><div class="lab">Participants</div></div>
+      <div class="stat"><div class="num b">15</div><div class="lab">Datasets</div></div>
+      <div class="stat"><div class="num o">18</div><div class="lab">Downstream tasks</div></div>
+      <div class="stat"><div class="num g">10</div><div class="lab">Pretraining methods</div></div>
+      <div class="stat"><div class="num b">1,000+</div><div class="lab">Trained models</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Overview ============ -->
+<section class="section" id="overview">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <span class="kicker">Overview</span>
+      <h2>From a fragmented landscape to a unified, open study</h2>
+      <p>Wearable motion sensing is a natural fit for foundation models, yet its pretraining and scaling principles remain poorly understood.</p>
+    </div>
+
+    <div class="card prose">
+      <p><strong>Abstract.</strong> Wearable motion sensing provides a continuous and scalable window into human behavior and health, making it a natural fit for foundation models, yet its pretraining and scaling principles remain poorly understood. Prior work studies isolated design choices, such as sensor placement or sampling frequency, often under fixed settings and narrow downstream tasks that fail to capture real-world sensing diversity. We introduce <strong>Inertia-1</strong>, a fully open exploration of wearable motion foundation models. Using massive corpora of accelerometer data from global sources spanning more than 18.2M hours, we build a controlled framework for studying the full lifecycle of wearable motion foundation models, covering data choices such as sensor modality, device placement, sampling rate, and window length; model choices such as architectures and model size; and training choices such as pretraining objective and data scale.</p>
+      <p>Extensive evaluations across 15 datasets spanning human activity recognition, freezing-of-gait detection, and disease prediction reveal intriguing findings for building motion foundation models that generalize across tasks and sensing conditions. Collectively, Inertia-1 not only presents state-of-the-art recipes for diverse downstream tasks, but also serves as a comprehensive, practical, and open cookbook for wearable motion representation learning.</p>
+    </div>
+
+    <div class="card prose" style="margin-top:1.1rem;">
+      <p><strong>Why this is hard.</strong> The field is fragmented in layers: data pipelines differ in sampling rate, window length, sensor modality, body placement, and axis representation; methods differ in objective, architecture, and representation domain; datasets differ in scale and clinical context; and downstream evaluation spans activity recognition, gait analysis, and disease prediction. Large cohorts provide population-scale longitudinal data but often release compressed, downsampled, or vector-magnitude traces, while HAR and freezing-of-gait datasets offer high-frequency signals but are small in scale.</p>
+      <p><strong>Our approach.</strong> Rather than proposing a single new architecture, Inertia-1 turns this fragmented landscape into a unified space of controlled exploration &mdash; treating motion foundation models as a joint problem over data, sensing configurations, pretraining algorithms, and downstream tasks, so the same pretrained representation can transfer from short-term activity recognition to long-term disease prediction.</p>
+    </div>
+
+    <figure class="figure teaser">
+      <div class="frame">
+        <video autoplay loop muted playsinline poster="./static/images/teaser.svg">
+          <source src="./static/videos/teaser.mp4" type="video/mp4">
+        </video>
+      </div>
+      <figcaption><b>Figure 1.</b> Overview of Inertia-1: large-scale accelerometer pretraining, diverse self-supervised objectives, controlled sensing setups, and downstream evaluation across activity recognition, gait analysis, and disease prediction.</figcaption>
+    </figure>
+
+    <div class="news">
+      <div class="row"><span class="date">Jul 2026</span><span class="what">Code released on <a href="https://github.com/yang-ai-lab/Inertia-1" target="_blank" rel="noopener">GitHub</a>.</span></div>
+      <div class="row"><span class="date">Jun 2026</span><span class="what">Project website is live.</span></div>
+      <div class="row"><span class="date">Soon</span><span class="what">Paper to be released on arXiv.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Framework ============ -->
+<section class="section alt" id="framework">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <span class="kicker">The Framework</span>
+      <h2>One controlled space over data, sensing, objectives &amp; tasks</h2>
+      <p>Inertia-1 is an open, extensible framework built on four pillars, evaluated across a rigorous grid of sensing and scaling choices.</p>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar o">
+        <span class="idx">1</span>
+        <h3>Pretraining</h3>
+        <p>10 representative methods under shared training and evaluation settings, covering 5 classes of objectives &mdash; general self-supervised and motion-specific.</p>
+      </div>
+      <div class="pillar g">
+        <span class="idx">2</span>
+        <h3>Data pipelines</h3>
+        <p>A rigorous grid over sampling rate, window length, sensor modality, axis dimensionality, and body placement.</p>
+      </div>
+      <div class="pillar b">
+        <span class="idx">3</span>
+        <h3>Scale</h3>
+        <p>To our knowledge the largest waveform-level wearable motion collection to date: 18.2M hours from 115,000+ people across 15 datasets.</p>
+      </div>
+      <div class="pillar mix">
+        <span class="idx">4</span>
+        <h3>Downstream tasks</h3>
+        <p>10 human activity recognition datasets, 3 freezing-of-gait datasets, and 7 disease prediction tasks.</p>
+      </div>
+    </div>
+
+    <h3 class="subhead"><span class="bar"></span> Pretraining objectives</h3>
+    <div class="methods">
+      <div class="method o">
+        <h4>Autoregressive prediction</h4>
+        <div class="ms">Predict future motion from past context</div>
+        <p>Learns transferable behavioral dynamics by forecasting upcoming motion patches.</p>
+        <div class="pills"><span class="pill o">ARG (GRU)</span><span class="pill o">ART (Transformer)</span></div>
+      </div>
+      <div class="method g">
+        <h4>Contrastive learning</h4>
+        <div class="ms">Align related views, separate unrelated ones</div>
+        <p>Spans general and wearable-specific objectives built around motion augmentations and temporal structure.</p>
+        <div class="pills"><span class="pill g">SimCLR</span><span class="pill g">SSL-Wearables</span><span class="pill g">RelCon</span></div>
+      </div>
+      <div class="method b">
+        <h4>Self-distillation</h4>
+        <div class="ms">Teacher&ndash;student consistency, no negatives</div>
+        <p>Tests whether non-contrastive representation learning transfers to wearable motion.</p>
+        <div class="pills"><span class="pill b">DINO</span></div>
+      </div>
+      <div class="method k">
+        <h4>Masked reconstruction</h4>
+        <div class="ms">Recover masked signal segments</div>
+        <p>Covers both time-domain and time&ndash;frequency reconstruction-style objectives.</p>
+        <div class="pills"><span class="pill">PatchTST</span><span class="pill">Self-PAB</span><span class="pill">LSM</span></div>
+      </div>
+      <div class="method n">
+        <h4>Supervised baselines</h4>
+        <div class="ms">Trained from scratch per task</div>
+        <p>Reference points to separate <em>whether</em> pretraining helps from <em>which</em> form of pretraining helps.</p>
+        <div class="pills"><span class="pill">ViT</span><span class="pill">CNN</span></div>
+      </div>
+    </div>
+
+    <h3 class="subhead"><span class="bar"></span> Data regimes &amp; downstream tasks</h3>
+    <div class="tasks">
+      <div class="task o">
+        <div class="top"><span class="ic"><i class="fas fa-person-walking"></i></span><span class="count">10</span></div>
+        <h4>Activity recognition</h4>
+        <p>Short-term motion semantics &mdash; walking, sitting, running, household and exercise movements.</p>
+        <div class="pills sets"><span class="pill">CAPTURE-24</span><span class="pill">HAR70+</span><span class="pill">HARTH</span><span class="pill">HHAR</span><span class="pill">MHEALTH</span><span class="pill">OPPORTUNITY</span><span class="pill">PAMAP2</span><span class="pill">RecoFit</span><span class="pill">WISDM</span><span class="pill">WEAR</span></div>
+      </div>
+      <div class="task g">
+        <div class="top"><span class="ic"><i class="fas fa-shoe-prints"></i></span><span class="count">3</span></div>
+        <h4>Freezing of gait</h4>
+        <p>Transient, clinically meaningful disruptions in locomotion &mdash; subtle abnormalities beyond standard activities.</p>
+        <div class="pills sets"><span class="pill">Daphnet FoG</span><span class="pill">OdayFoG</span><span class="pill">FoGTurning</span></div>
+      </div>
+      <div class="task b">
+        <div class="top"><span class="ic"><i class="fas fa-heart-pulse"></i></span><span class="count">7</span></div>
+        <h4>Disease prediction</h4>
+        <p>Long-term, population-level health modeling from longitudinal behavioral signatures.</p>
+        <div class="pills sets"><span class="pill">Sleep</span><span class="pill">Depression</span><span class="pill">Depr. severity</span><span class="pill">Parkinson&rsquo;s</span><span class="pill">Diabetes</span><span class="pill">Osteoarthritis</span><span class="pill">Osteoporosis</span></div>
+      </div>
+    </div>
+    <p class="lead" style="margin-top:1.1rem;">Pretraining sources: <strong>NHANES</strong> (primary; raw high-frequency accelerometry from ~14,000 participants over multiple days) and the <strong>UK Biobank</strong> (100,000+ participants of large lower-resolution cohort data) for scaling studies.</p>
+
+    <h3 class="subhead"><span class="bar"></span> Axes of exploration</h3>
+    <div class="axes-layout">
+      <div class="axes">
+        <div class="axis"><div class="name">Placement</div><div class="vals"><span class="pill o">wrist</span><span class="pill">hand</span><span class="pill">arm</span><span class="pill">chest</span><span class="pill">back</span><span class="pill">hip</span><span class="pill">thigh</span><span class="pill">knee</span><span class="pill">shank</span><span class="pill">ankle</span></div></div>
+        <div class="axis"><div class="name">Sensor modality</div><div class="vals"><span class="pill o">accelerometer</span><span class="pill">gyroscope</span><span class="pill">magnetometer</span></div></div>
+        <div class="axis"><div class="name">Sampling frequency</div><div class="vals"><span class="pill">0.2 Hz</span><span class="pill">1 Hz</span><span class="pill">5 Hz</span><span class="pill o">20 Hz</span></div></div>
+        <div class="axis"><div class="name">Window length</div><div class="vals"><span class="pill">10 s</span><span class="pill o">30 s</span><span class="pill">60 s</span><span class="pill">2 h</span></div></div>
+        <div class="axis"><div class="name">Representation domain</div><div class="vals"><span class="pill o">time</span><span class="pill">frequency</span></div></div>
+        <div class="axis"><div class="name">Axis dimensionality</div><div class="vals"><span class="pill">uniaxial</span><span class="pill o">triaxial</span></div></div>
+        <div class="axis"><div class="name">Model scale</div><div class="vals"><span class="pill">10M</span><span class="pill">30M</span><span class="pill">100M</span></div></div>
+        <div class="axis"><div class="name">Transfer</div><div class="vals"><span class="pill">linear probe</span><span class="pill">full finetune</span><span class="pill">MIL</span></div></div>
+      </div>
+      <figure class="figure">
+        <div class="frame"><img src="./static/images/coverage.svg" alt="Coverage breadth of Inertia-1"></div>
+        <figcaption><b>Figure 2.</b> Coverage breadth of Inertia-1 across the controlled sensing and modeling axes.</figcaption>
+      </figure>
+    </div>
+
+    <div class="callout">
+      <span class="badge">Default setup</span>
+      <div class="chips">
+        <span class="chip"><b>30 s</b> windows</span>
+        <span class="chip"><b>20 Hz</b> sampling</span>
+        <span class="chip"><b>triaxial</b> wrist accelerometer</span>
+        <span class="chip">pretrained on <b>NHANES</b></span>
+        <span class="chip">linear probing + full finetuning</span>
+        <span class="chip"><b>MIL</b> heads on frozen backbones for disease</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Findings ============ -->
+<section class="section" id="findings">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <span class="kicker">Findings</span>
+      <h2>Lessons from 1,000+ trained models</h2>
+      <p>With one unified framework, Inertia-1 reveals what makes wearable motion foundation models robust, transferable, and useful across real-world conditions.</p>
+    </div>
+
+    <div class="takeaways">
+      <div class="takeaway"><div class="n">01</div><div><h4>Pretraining is beneficial, but not universal</h4><p>Self-supervised pretraining consistently improves over supervised training from scratch, yet no single objective dominates across all task families and metrics.</p></div></div>
+      <div class="takeaway"><div class="n">02</div><div><h4>Data representation is a first-order choice</h4><p>Triaxial signals outperform magnitude summaries, while sampling rate and window length matter differently across task granularities.</p></div></div>
+      <div class="takeaway"><div class="n">03</div><div><h4>Scale helps, but not all scale is equal</h4><p>More (and more diverse) pretraining data yields steadier gains than larger model sizes, and multi-sensor fusion drives strong gains in sensor-expansion settings.</p></div></div>
+      <div class="takeaway"><div class="n">04</div><div><h4>SOTA requires coordinated design</h4><p>Performance depends on the joint choice of data fidelity, sensing setup, objective, and scale &mdash; not any single recipe.</p></div></div>
+      <div class="takeaway"><div class="n">05</div><div><h4>Inertia-1 as an open cookbook</h4><p>As the most diverse and unified testbed to date, Inertia-1 offers a practical foundation for studying, extending, and deploying wearable motion foundation models.</p></div></div>
+    </div>
+
+    <!-- 4.1 -->
+    <div class="finding">
+      <div class="tagrow"><span class="secnum">4.1</span><h3>Robust pretraining objectives</h3></div>
+      <div class="prose">
+        <p>Under the default setting (20 Hz, 30 s, triaxial, pretrained on NHANES), self-supervised pretraining consistently outperforms supervised training from scratch across HAR, FoG, and disease prediction. Specialized or predictive objectives tend to be more robust for short-term recognition, while differences shrink for disease prediction. Crucially, the benefit of objective design grows with task specialization: SSL variance and gains are modest for HAR but widen sharply for FoG and disease.</p>
+      </div>
+      <div class="metrics">
+        <div class="metric o"><div class="mv">+4.0</div><div class="ml">SSL gain &middot; HAR</div></div>
+        <div class="metric g"><div class="mv">+16.4</div><div class="ml">SSL gain &middot; FoG</div></div>
+        <div class="metric b"><div class="mv">+19.7</div><div class="ml">SSL gain &middot; Disease</div></div>
+      </div>
+      <figure class="figure shrink">
+        <div class="frame"><img src="./static/images/objectives.png" alt="SSL versus supervised across task families"></div>
+      </figure>
+    </div>
+
+    <!-- 4.2 -->
+    <div class="finding">
+      <div class="tagrow"><span class="secnum">4.2</span><h3>When does scaling help?</h3></div>
+      <div class="prose">
+        <p>Increasing encoder size alone (ART from 10M to 100M parameters) leaves linear-probe performance largely flat under a fixed corpus, and full finetuning can even degrade on small downstream datasets. Expanding the pretraining <em>data</em> is the more reliable lever: scaling the number of individuals, the number of segments per person, and mixing NHANES with UK Biobank all improve transfer. Scaling motion FMs is data-first, but not model-free &mdash; capacity must be matched to signal diversity and task structure.</p>
+      </div>
+      <div class="figs-2">
+        <figure class="figure">
+          <div class="frame"><img src="./static/images/model_scaling.svg" alt="Model scaling across tasks"></div>
+          <figcaption><b>Figure 3.</b> Model scaling across tasks.</figcaption>
+        </figure>
+        <figure class="figure">
+          <div class="frame"><img src="./static/images/data_scaling.svg" alt="Data scaling across settings"></div>
+          <figcaption><b>Figure 4.</b> Data scaling across settings.</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- 4.3 -->
+    <div class="finding">
+      <div class="tagrow"><span class="secnum">4.3</span><h3>A unified lens over sensing design</h3></div>
+      <div class="prose">
+        <p>Sensing choices are not secondary implementation details &mdash; they directly shape what motion FMs can transfer. Triaxial inputs consistently beat vector-magnitude summaries. Performance generally improves with sampling frequency, but pretrained representations stay competitive even at 1 Hz for HAR, while disease prediction benefits more from higher temporal resolution. Window length is task-dependent (30 s and 60 s are strong overall), and time-domain modeling better preserves gait and disease signals than frequency-domain reconstruction.</p>
+      </div>
+    </div>
+
+    <!-- 4.4 -->
+    <div class="finding">
+      <div class="tagrow"><span class="secnum">4.4</span><h3>Multi-stream sensing</h3></div>
+      <div class="prose">
+        <p>Wearable datasets often contain richer signals than a single wrist accelerometer. Fusing multiple synchronized streams &mdash; across sensor modalities and body placements &mdash; consistently improves performance, showing that different streams provide complementary rather than redundant information. A model pretrained only on wrist accelerometry transfers to unseen placements and modalities, and fusion produces better-separated activity clusters in the representation space.</p>
+      </div>
+      <div class="figs-row">
+        <figure class="figure">
+          <div class="frame"><img src="./static/images/multistream.svg" alt="Wrist-accelerometer pretraining transfers across sensors and placements"></div>
+          <figcaption><b>Figure 7.</b> Wrist-accelerometer pretraining transfers across sensors &amp; placements.</figcaption>
+        </figure>
+        <figure class="figure">
+          <div class="frame"><img src="./static/images/embedding.svg" alt="Multi-stream fusion improves representation geometry"></div>
+          <figcaption><b>Figure 8.</b> Multi-stream fusion improves representation geometry.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Paper ============ -->
+<section class="section alt" id="paper">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <span class="kicker">Paper</span>
+      <h2>Read &amp; cite Inertia-1</h2>
+    </div>
+
+    <div class="btns" style="margin-top:0;margin-bottom:1.6rem;">
+      <a class="btn primary disabled" href="#"><i class="ai ai-arxiv"></i> arXiv <span class="tag">soon</span></a>
+      <a class="btn outline disabled" href="#"><i class="fas fa-file-pdf"></i> PDF <span class="tag">soon</span></a>
+      <a class="btn" href="https://github.com/yang-ai-lab/Inertia-1" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>
+    </div>
+
+    <h3 class="subhead"><span class="bar"></span> BibTeX</h3>
+    <pre class="bibtex"><code><span class="k">@article</span>{xu2026inertia1,
+  title   = {Inertia-1: An Open Exploration of Wearable Motion Foundation Models},
+  author  = {Xu, Zongzhe and Anand, Aakarsh and Jiang, Sarah and Zhuang, Chuntung and
+             Shuai, Zitao and Sankararaman, Sriram and Yang, Yuzhe},
+  journal = {arXiv preprint},
+  year    = {2026}
+}</code></pre>
+
+    <p class="ack">Acknowledgments: We gratefully acknowledge the support of Amazon Science Hub and UCLA DataX.</p>
+  </div>
+</section>
+
+<!-- ============ Footer ============ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="row">
+      <span class="brand2"><span class="mark"></span> Inertia-1</span>
+      <span class="icons">
+        <a href="https://github.com/yang-ai-lab/Inertia-1" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="#" aria-label="arXiv"><i class="ai ai-arxiv"></i></a>
+      </span>
+    </div>
+    <p class="fine">An open cookbook for wearable motion representation learning. The arXiv paper and PDF links will be added upon release.</p>
+  </div>
+</footer>
+
+<script src="./static/js/main.js?v=1"></script>
+</body>
+</html>
