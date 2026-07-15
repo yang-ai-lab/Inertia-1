@@ -1,19 +1,18 @@
 # Inertia-1: An Open Exploration of Wearable Motion Foundation Models
-[![Paper](https://img.shields.io/badge/paper-arXiv-red)](https://yang-ai-lab.github.io/Inertia-1/paper/)
+[![Paper](https://img.shields.io/badge/paper-arXiv-red)](https://arxiv.org/abs/2607.06617)
 [![Website](https://img.shields.io/badge/website-demo-blue)](https://yang-ai-lab.github.io/Inertia-1/)
+[![Website](https://img.shields.io/badge/website-paper-yellow)](https://yang-ai-lab.github.io/Inertia-1/paper/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 
 Inertia-1 is an open exploration of **wearable motion foundation models**. Motion sensing is fragmented — datasets disagree on sampling rate, window length, sensor modality, body placement, and even signal format, and nearly every task gets its own bespoke model. Inertia-1 studies the full lifecycle of motion models (data, sensing, objectives, and scale) inside a single, controlled space, asking whether one self-supervised representation learned from raw accelerometry can transfer across the body, devices, and downstream tasks.
-
-The headline finding: a representation pretrained on **wrist accelerometry alone** transfers to placements and sensor types it never saw during training, and fusing additional streams makes it both more accurate and cleaner. This repository is an intentionally **minimal, end-to-end slice** of that pipeline. Our internal codebase supports many model families; here we ship two representative ones — **AR-Transformer** (patch-level autoregressive Transformer) and **PatchTST** (masked patch reconstruction) — so the workflow is easy to read start to finish. The datasets we used (NHANES plus public HAR/FoG corpora) are not redistributable, so we ship the *preprocessing pipelines* and *loader/placeholder code* instead, with pointers below.
 
 ---
 
 ## 📰 News
 - **[2026-07-06]** [Project website](https://yang-ai-lab.github.io/Inertia-1/) is live!
 - **[2026-07-06]** Code released on GitHub!
-- **[Coming soon]** Paper release on arXiv.
+- **[2026-07-06]** Paper release on [arXiv](https://arxiv.org/abs/2607.06617).
 
 ---
 
@@ -156,7 +155,7 @@ contracts) is fully documented there.
 
 ---
 
-## 3. Disease detection (patient-level MIL)
+## 3. Disease detection
 
 We detect patient-level outcomes (e.g. depression severity, sleep complaints,
 medication use) by pooling a *bag* of a patient's accelerometer windows through
@@ -194,25 +193,15 @@ NHANES download / preprocessing pointers are the same as in
 
 ---
 
-## Notes & scope
-
-- Two methods are shipped (`ar_transformer`, `patchtst`); the config/registry
-  are structured so adding a method is a localized change.
-- The datasets (NHANES + public HAR/FoG corpora) are **not** included. This repo
-  ships the code, configs, frozen splits, and preprocessing pipelines needed to
-  reproduce the workflow on your own copies of the data.
-
----
-
 ## 📝 Citation
 
 If you use Inertia-1 in your research, please cite the paper:
 
 ```bibtex
-@article{inertia1,
+@article{xu2026inertia1,
   title={Inertia-1: An Open Exploration of Wearable Motion Foundation Models},
   author={Xu, Zongzhe and Anand, Aakarsh and Jiang, Sarah and Zhuang, Chuntung and Shuai, Zitao and Sankararaman, Sriram and Yang, Yuzhe},
-  journal={arXiv preprint arXiv:<PLACEHOLDER>},
+  journal={arXiv preprint arXiv:2607.06617},
   year={2026}
 }
 ```
@@ -222,11 +211,3 @@ If you use Inertia-1 in your research, please cite the paper:
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- Pretraining data: **NHANES** accelerometry (governed by its own usage terms).
-- Downstream benchmarks: the public **HAR** and **FoG** corpora listed above, each from its original source.
-- Model architecture inspiration: PatchTST (https://github.com/yuqinie98/PatchTST).
