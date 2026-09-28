@@ -1,0 +1,69 @@
+cff-version: 1.2.0
+message: "If you use Inertia-1, please cite the paper below."
+type: software
+title: "Inertia-1"
+abstract: >-
+  Code for Inertia-1, an open study of wearable motion foundation models: self-supervised pretraining on
+  large-scale accelerometry, evaluated on activity recognition, freezing of gait, and disease prediction.
+version: 0.1.0
+date-released: 2026-07-07
+license: MIT
+repository-code: "https://github.com/yang-ai-lab/Inertia-1"
+url: "https://yang-ai-lab.github.io/Inertia-1/"
+keywords:
+  - wearables
+  - accelerometry
+  - foundation models
+  - self-supervised learning
+  - time series
+authors:
+  - family-names: Xu
+    given-names: Zongzhe
+    orcid: "https://orcid.org/0009-0006-5589-5253"
+  - family-names: Anand
+    given-names: Aakarsh
+    orcid: "https://orcid.org/0009-0008-9581-3827"
+  - family-names: Jiang
+    given-names: Sarah
+    orcid: "https://orcid.org/0009-0003-2636-5681"
+  - family-names: Zhuang
+    given-names: Chuntung
+    orcid: "https://orcid.org/0009-0006-0726-4051"
+  - family-names: Shuai
+    given-names: Zitao
+    orcid: "https://orcid.org/0009-0006-1055-8376"
+  - family-names: Sankararaman
+    given-names: Sriram
+    orcid: "https://orcid.org/0000-0003-1586-9641"
+  - family-names: Yang
+    given-names: Yuzhe
+    orcid: "https://orcid.org/0000-0002-7634-8295"
+preferred-citation:
+  type: conference-paper
+  title: "Inertia-1: An Open Exploration of Wearable Motion Foundation Models"
+  collection-title: "Advances in Neural Information Processing Systems (NeurIPS)"
+  year: 2026
+  url: "https://arxiv.org/abs/2607.06617"
+  doi: "10.48550/arXiv.2607.06617"
+  authors:
+    - family-names: Xu
+      given-names: Zongzhe
+      orcid: "https://orcid.org/0009-0006-5589-5253"
+    - family-names: Anand
+      given-names: Aakarsh
+      orcid: "https://orcid.org/0009-0008-9581-3827"
+    - family-names: Jiang
+      given-names: Sarah
+      orcid: "https://orcid.org/0009-0003-2636-5681"
+    - family-names: Zhuang
+      given-names: Chuntung
+      orcid: "https://orcid.org/0009-0006-0726-4051"
+    - family-names: Shuai
+      given-names: Zitao
+      orcid: "https://orcid.org/0009-0006-1055-8376"
+    - family-names: Sankararaman
+      given-names: Sriram
+      orcid: "https://orcid.org/0000-0003-1586-9641"
+    - family-names: Yang
+      given-names: Yuzhe
+      orcid: "https://orcid.org/0000-0002-7634-8295"
