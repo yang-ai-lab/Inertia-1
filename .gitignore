@@ -16,7 +16,7 @@ wandb/
 *.ckpt
 
 # Local data (datasets are not redistributable; see README)
-data/
+/data/
 
 # OS / editor
 .DS_Store
