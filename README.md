@@ -10,6 +10,7 @@ Inertia-1 is an open exploration of **wearable motion foundation models**. Motio
 ---
 
 ## 📰 News
+- **[2026-09-28]** Inertia-1 is accepted at **NeurIPS 2026**!
 - **[2026-07-06]** [Project website](https://yang-ai-lab.github.io/Inertia-1/) is live!
 - **[2026-07-06]** Code released on GitHub!
 - **[2026-07-06]** Paper release on [arXiv](https://arxiv.org/abs/2607.06617).
@@ -198,10 +199,10 @@ NHANES download / preprocessing pointers are the same as in
 If you use Inertia-1 in your research, please cite the paper:
 
 ```bibtex
-@article{xu2026inertia1,
+@inproceedings{xu2026inertia1,
   title={Inertia-1: An Open Exploration of Wearable Motion Foundation Models},
   author={Xu, Zongzhe and Anand, Aakarsh and Jiang, Sarah and Zhuang, Chuntung and Shuai, Zitao and Sankararaman, Sriram and Yang, Yuzhe},
-  journal={arXiv preprint arXiv:2607.06617},
+  booktitle={Advances in Neural Information Processing Systems (NeurIPS)},
   year={2026}
 }
 ```
